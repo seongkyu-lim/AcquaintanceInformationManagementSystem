@@ -1,9 +1,15 @@
 package com.loopy.AcquaintanceInformationManagementSystem.domain;
 
+import lombok.*;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Data
 @Entity
 public class Person {
 
@@ -11,41 +17,20 @@ public class Person {
     @Id
     private Long id;
 
+    @NonNull
     private String name;
 
+    private String hobby;
+
+    @NonNull
     private int age;
 
-    public Long getId() {
-        return id;
-    }
+    private String bloodType;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private String address;
 
-    public String getName() {
-        return name;
-    }
+    private String job;
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    //toString을 재정의해주어 객체의 값을 정상적으로 출력한다.
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                '}';
-    }
+    @ToString.Exclude
+    private String phoneNumber;
 }
