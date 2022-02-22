@@ -31,6 +31,15 @@ class PersonServiceTest {
     }
 
     @Test
+    void getPeopleByName(){
+        givenPeople();
+
+        List<Person> result = personService.getPeopleByName("martin");
+
+        result.forEach(System.out::println);
+    }
+
+    @Test
     void cascadeTest(){
 
         givenPeople();
@@ -65,20 +74,20 @@ class PersonServiceTest {
     }
 
     private void givenPeople() {
-        givenPerson("martin", 27);
-        givenBlockPerson("jenny", 25);
-        givenPerson("mike", 22);
-        givenBlockPerson("hey", 21);
+        givenPerson("martin", 27,"A");
+        givenBlockPerson("jenny", 25,"A");
+        givenPerson("mike", 22,"A");
+        givenBlockPerson("hey", 21,"A");
     }
 
-    private void givenBlockPerson(String name, int age) {
-        Person person = new Person(name, age);
+    private void givenBlockPerson(String name, int age, String bloodType) {
+        Person person = new Person(name, age, bloodType);
         person.setBlock(new Block(name));
         personRepository.save(person);
     }
 
-    private void givenPerson(String name, int age) {
-        personRepository.save(new Person(name,age));
+    private void givenPerson(String name, int age, String bloodType) {
+        personRepository.save(new Person(name,age,bloodType));
     }
 
 

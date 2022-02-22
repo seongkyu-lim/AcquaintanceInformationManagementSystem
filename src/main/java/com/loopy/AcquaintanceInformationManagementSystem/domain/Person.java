@@ -3,6 +3,7 @@ package com.loopy.AcquaintanceInformationManagementSystem.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,11 +24,14 @@ public class Person {
     @NonNull
     private int age;
 
+    @NonNull
     private String bloodType;
 
     private String address;
 
     private String job;
+
+    private LocalDateTime birthday;
 
     @ToString.Exclude
     private String phoneNumber;
