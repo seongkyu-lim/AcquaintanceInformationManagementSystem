@@ -1,9 +1,11 @@
 package com.loopy.AcquaintanceInformationManagementSystem.domain;
 
+import com.loopy.AcquaintanceInformationManagementSystem.domain.dto.Birthday;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.validation.Valid;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,7 +33,9 @@ public class Person {
 
     private String job;
 
-    private LocalDateTime birthday;
+    @Valid
+    @Embedded
+    private Birthday birthday;
 
     @ToString.Exclude
     private String phoneNumber;

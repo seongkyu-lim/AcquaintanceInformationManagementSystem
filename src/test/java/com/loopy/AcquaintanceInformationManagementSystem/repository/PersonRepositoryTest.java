@@ -1,10 +1,12 @@
 package com.loopy.AcquaintanceInformationManagementSystem.repository;
 
 import com.loopy.AcquaintanceInformationManagementSystem.domain.Person;
+import com.loopy.AcquaintanceInformationManagementSystem.domain.dto.Birthday;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -63,26 +65,28 @@ class PersonRepositoryTest {
     @Test
     void findByBirthdayBetween(){
 
-        givenPerson("david", 20, "A", LocalDateTime.of(1991,9,12,12,12));
-        givenPerson("HEY", 23, "A",LocalDateTime.of(1991,10,12,12,12));
-        givenPerson("jane", 12, "B",LocalDateTime.of(1990,9,12,12,12));
-        givenPerson("sophia", 13, "AB",LocalDateTime.of(1990,2,12,12,12));
+        givenPerson("david", 20, "A", LocalDate.of(1991,2,28));
+        givenPerson("HEY", 23, "A",LocalDate.of(1991,10,12));
+        givenPerson("jane", 12, "B",LocalDate.of(1990,9,12));
+        givenPerson("sophia", 13, "AB",LocalDate.of(1990,2,12));
 
-        List<Person> result = personRepository.findByBirthdayBetween(LocalDateTime.of(1991,8,2,12,12), LocalDateTime.of(1992,9,3,12,12));
+        List<Person> result = personRepository.findByMonthOfBirthday(9);
 
         result.forEach(System.out::println);
     }
 
+
+    //overloading
     private void givenPerson(String name, int age, String bloodType){
 
         givenPerson(name, age, bloodType, null);
 
     }
 
-    private void givenPerson(String name, int age, String bloodType, LocalDateTime birthDay){
+    private void givenPerson(String name, int age, String bloodType, LocalDate birthDay){
 
         Person person = new Person(name, age, bloodType);
-        person.setBirthday(birthDay);
+        person.setBirthday(new Birthday(birthDay));
         personRepository.save(person);
 
     }
