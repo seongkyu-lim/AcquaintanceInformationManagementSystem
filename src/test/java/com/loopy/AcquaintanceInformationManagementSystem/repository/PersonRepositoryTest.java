@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,13 +27,13 @@ class PersonRepositoryTest {
         personRepository.save(person);
 
         // .findAll()을하면 저장된 데이터들을 리스트형식으로 전부 반환.
-        System.out.println(personRepository.findAll());
+        // System.out.println(personRepository.findAll());
 
-        List<Person> people = personRepository.findAll();
+        List<Person> jane = personRepository.findByName("jane");
 
-        assertThat(people.size()).isEqualTo(1);
-        assertThat(people.get(0).getAge()).isEqualTo(15);
-        assertThat(people.get(0).getName()).isEqualTo("jane");
+        assertThat(jane.size()).isEqualTo(1);
+        assertThat(jane.get(0).getAge()).isEqualTo(15);
+        assertThat(jane.get(0).getName()).isEqualTo("jane");
     }
 
     @Test
@@ -53,42 +52,15 @@ class PersonRepositoryTest {
     @Test
     void findByBloodType(){
 
-        givenPerson("david", 20, "A");
-        givenPerson("HEY", 23, "A");
-        givenPerson("jane", 12, "B");
-        givenPerson("sophia", 13, "AB");
-
         List<Person> result = personRepository.findByBloodType("A");
         result.forEach(System.out::println);
     }
 
     @Test
-    void findByBirthdayBetween(){
+    void findByMonthOfBirthday(){
 
-        givenPerson("david", 20, "A", LocalDate.of(1991,2,28));
-        givenPerson("HEY", 23, "A",LocalDate.of(1991,10,12));
-        givenPerson("jane", 12, "B",LocalDate.of(1990,9,12));
-        givenPerson("sophia", 13, "AB",LocalDate.of(1990,2,12));
-
-        List<Person> result = personRepository.findByMonthOfBirthday(9);
+        List<Person> result = personRepository.findByMonthOfBirthday(8);
 
         result.forEach(System.out::println);
     }
-
-
-    //overloading
-    private void givenPerson(String name, int age, String bloodType){
-
-        givenPerson(name, age, bloodType, null);
-
-    }
-
-    private void givenPerson(String name, int age, String bloodType, LocalDate birthDay){
-
-        Person person = new Person(name, age, bloodType);
-        person.setBirthday(new Birthday(birthDay));
-        personRepository.save(person);
-
-    }
-
 }

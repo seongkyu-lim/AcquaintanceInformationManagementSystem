@@ -14,20 +14,20 @@ import javax.validation.Valid;
 @Entity
 public class Person {
 
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
     @NonNull
     private String name;
 
-    private String hobby;
-
     @NonNull
     private int age;
 
     @NonNull
     private String bloodType;
+
+    private String hobby;
 
     private String address;
 
