@@ -1,8 +1,8 @@
 package com.loopy.AcquaintanceInformationManagementSystem.service;
 
-import com.loopy.AcquaintanceInformationManagementSystem.domain.Block;
 import com.loopy.AcquaintanceInformationManagementSystem.domain.Person;
-import com.loopy.AcquaintanceInformationManagementSystem.repository.BlockRepository;
+import com.loopy.AcquaintanceInformationManagementSystem.domain.dto.Birthday;
+import com.loopy.AcquaintanceInformationManagementSystem.domain.dto.PersonDto;
 import com.loopy.AcquaintanceInformationManagementSystem.repository.PersonRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -54,6 +52,29 @@ public class PersonService {
 
     @Transactional
     public void save(Person person) {
+        personRepository.save(person);
+    }
+
+    @Transactional
+    public void update(Long id, PersonDto dto) {
+
+        Person personInDb = personRepository.findById(id).orElseThrow(()-> new RuntimeException("아이디가 존재하지 않습니다."));
+
+        if(!personInDb.getName().equals(dto.getName())){
+            throw new RuntimeException("이름이 다릅니다.");
+        }
+
+        personInDb.set(dto);
+        personRepository.save(personInDb);
+    }
+
+    @Transactional
+    public void update(Long id, String name) {
+
+        Person person = personRepository.findById(id).orElseThrow(()->new RuntimeException("아이디가 존재하지 않습니다."));
+
+        person.setName(name);
+
         personRepository.save(person);
     }
 }

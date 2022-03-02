@@ -1,7 +1,9 @@
 package com.loopy.AcquaintanceInformationManagementSystem.domain;
 
 import com.loopy.AcquaintanceInformationManagementSystem.domain.dto.Birthday;
+import com.loopy.AcquaintanceInformationManagementSystem.domain.dto.PersonDto;
 import lombok.*;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -52,4 +54,26 @@ public class Person {
     //ALL키워드를 사용하면 save뿐아니라 delete등등도 함꼐 관리해 줌.
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Block block;
+
+
+    public void set(PersonDto dto){
+        if (dto.getAge()!= 0){
+            this.setAge(dto.getAge());
+        }
+        if(!StringUtils.isEmpty(dto.getHobby())){
+            this.setHobby(dto.getHobby());
+        }
+        if(!StringUtils.isEmpty(dto.getBloodType())){
+            this.setBloodType(dto.getBloodType());
+        }
+        if(!StringUtils.isEmpty(dto.getAddress())){
+            this.setAddress(dto.getAddress());
+        }
+        if(!StringUtils.isEmpty(dto.getJob())){
+            this.setJob(dto.getJob());
+        }
+        if(!StringUtils.isEmpty(dto.getPhoneNumber())){
+            this.setPhoneNumber(dto.getPhoneNumber());
+        }
+    }
 }

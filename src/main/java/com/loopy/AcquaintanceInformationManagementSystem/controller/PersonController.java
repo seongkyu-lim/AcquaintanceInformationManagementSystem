@@ -1,6 +1,7 @@
 package com.loopy.AcquaintanceInformationManagementSystem.controller;
 
 import com.loopy.AcquaintanceInformationManagementSystem.domain.Person;
+import com.loopy.AcquaintanceInformationManagementSystem.domain.dto.PersonDto;
 import com.loopy.AcquaintanceInformationManagementSystem.repository.PersonRepository;
 import com.loopy.AcquaintanceInformationManagementSystem.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,21 @@ public class PersonController {
     public void postPerson(@RequestBody Person person){
         personService.save(person);
 
-        log.info(String.valueOf(personRepository.findAll()));
+        log.info("person -> {} ", personRepository.findAll());
+    }
+
+    @PutMapping("/{id}")
+    //@RequestParam을 해주지 않아도 default로 id는 requestparam으로 받음.
+    public void updatePerson(@PathVariable Long id, @RequestBody PersonDto dto){
+        personService.update(id, dto);
+
+        log.info("person -> {}", personRepository.findAll());
+    }
+
+    @PatchMapping("/{id}")
+    public void updatePerson(@PathVariable Long id, String name){
+        personService.update(id, name);
+
+        log.info("person -> {}", personRepository.findAll());
     }
 }
