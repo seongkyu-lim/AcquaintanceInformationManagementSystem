@@ -77,4 +77,16 @@ public class PersonService {
 
         personRepository.save(person);
     }
+
+    @Transactional
+    public void delete(Long id) {
+        Person person = personRepository.findById(id).orElseThrow(()->new RuntimeException("아이디가 존재하지 않습니다."));
+
+        //soft delete..완전 삭재하지않고 삭제된 데이터라는 의미의 컬럼을 불린값으로 다뤄준다.
+        person.setDeleted(true);
+        personRepository.save(person);
+
+        // personRepository.deleteById(id);
+
+    }
 }

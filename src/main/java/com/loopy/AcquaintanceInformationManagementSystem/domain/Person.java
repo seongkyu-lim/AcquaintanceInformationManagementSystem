@@ -3,6 +3,8 @@ package com.loopy.AcquaintanceInformationManagementSystem.domain;
 import com.loopy.AcquaintanceInformationManagementSystem.domain.dto.Birthday;
 import com.loopy.AcquaintanceInformationManagementSystem.domain.dto.PersonDto;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Where;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
@@ -16,6 +18,8 @@ import javax.validation.constraints.NotEmpty;
 @RequiredArgsConstructor
 @Data
 @Entity
+//query method에 where조건을 전역적으로 추가.
+@Where(clause = "deleted = false")
 public class Person {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +52,10 @@ public class Person {
 
     @ToString.Exclude
     private String phoneNumber;
+
+    @ColumnDefault("false")
+    private boolean deleted;
+
 
     //cascade : person에서 block의 영속성까지 함께관리하겠다는 의미.
     //block을 먼저 저장해주고 person과 이어줄 필요없이 block을 생성하여 넣어주고 person을 save해주면 자동으로 block도 save해줌.

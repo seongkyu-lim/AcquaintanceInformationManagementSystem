@@ -19,4 +19,11 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     //JPQL
     @Query(value = "select person from Person person where person.birthday.monthOfBirthday= :month")
     List<Person> findByMonthOfBirthday(@Param("month") int month);
+
+
+    //nativeQuery 옵션을 true로 하면 entity와 상관없이 jpql문만 실행한다.
+    // nativeQuery 옵션을 사용하지않으면 person entity에 deleted false인 것만 조회하여 조회가안됨.
+    @Query(value = "select person from Person person where person.deleted = true", nativeQuery = true)
+    List<Person> findByPeopleDeleted();
+
 }
